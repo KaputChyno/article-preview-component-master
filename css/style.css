@@ -3,6 +3,16 @@
   box-sizing: border-box;
 }
 
+::selection {
+  background: #48556a;
+  color: #ecf2f8;
+}
+
+::-moz-selection {
+  background: #48556a;
+  color: #ecf2f8;
+}
+
 body {
   font-family: "Manrope", sans-serif;
   margin: auto;
@@ -23,24 +33,47 @@ body #container_card .card {
   margin: auto;
   display: flex;
   flex-wrap: wrap;
-  width: 1000px;
-  max-width: calc(100% - 2rem);
+  max-width: 1000px;
   box-shadow: 5px 1px 20px rgba(158, 175, 194, 0.5);
   -webkit-box-shadow: 5px 1px 20px rgba(158, 175, 194, 0.5);
   -moz-box-shadow: 5px 1px 20px rgba(158, 175, 194, 0.5);
 }
+@media only screen and (max-width: 1200px) {
+  body #container_card .card {
+    flex-direction: column;
+    width: calc(100% - 1rem);
+    max-width: 400px;
+  }
+}
 body #container_card .card .image_card {
   width: 40%;
   margin: 0;
+  border-radius: 10px 0 0 10px;
+  overflow: hidden;
+}
+@media only screen and (max-width: 1200px) {
+  body #container_card .card .image_card {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    height: 240px;
+  }
 }
 body #container_card .card .image_card img {
   object-fit: cover;
   height: 100%;
   width: 100%;
+  display: block;
 }
 body #container_card .card .infos_card {
   width: 60%;
   padding: 3rem;
+}
+@media only screen and (max-width: 1200px) {
+  body #container_card .card .infos_card {
+    width: 100%;
+    padding: 2rem 2rem 1rem;
+    position: relative;
+  }
 }
 body #container_card .card .infos_card h2 {
   margin: auto;
@@ -49,10 +82,21 @@ body #container_card .card .infos_card h2 {
   font-size: 2em;
   line-height: 1.3em;
 }
+@media only screen and (max-width: 1200px) {
+  body #container_card .card .infos_card h2 {
+    font-size: 1.5em;
+  }
+}
 body #container_card .card .infos_card .texte_infos_card {
   margin: 1rem auto 1.6rem;
   color: #6d7f97;
   font-size: 1.2em;
+}
+@media only screen and (max-width: 1200px) {
+  body #container_card .card .infos_card .texte_infos_card {
+    font-size: 1.1em;
+    margin-bottom: 2rem;
+  }
 }
 body #container_card .card .infos_card .personne_card {
   display: flex;
@@ -68,6 +112,11 @@ body #container_card .card .infos_card .personne_card .infos_personne_card {
   flex: 1;
   margin: 0 1rem;
 }
+@media only screen and (max-width: 1200px) {
+  body #container_card .card .infos_card .personne_card .infos_personne_card {
+    font-size: 1.1em;
+  }
+}
 body #container_card .card .infos_card .personne_card .infos_personne_card .nom_personne_card {
   color: #48556a;
   margin: auto;
@@ -78,19 +127,40 @@ body #container_card .card .infos_card .personne_card .infos_personne_card .date
   margin: auto;
 }
 body #container_card .card .infos_card .personne_card .share_card {
-  background: #ecf2f8;
-  border-radius: 100%;
   height: 36px;
   width: 36px;
   display: flex;
   cursor: pointer;
   position: relative;
+  transition: 0.2s ease;
+}
+@media only screen and (max-width: 1200px) {
+  body #container_card .card .infos_card .personne_card .share_card {
+    position: static;
+  }
+}
+body #container_card .card .infos_card .personne_card .share_card.active .popup_share_card {
+  transform: translateX(-50%);
+  opacity: 1;
+  visibility: visible;
+}
+body #container_card .card .infos_card .personne_card .share_card.active .container_svg {
+  background: #48556a;
+}
+@media only screen and (max-width: 1200px) {
+  body #container_card .card .infos_card .personne_card .share_card.active .container_svg {
+    background: #6d7f97;
+    z-index: 1;
+  }
+}
+body #container_card .card .infos_card .personne_card .share_card.active .container_svg svg path {
+  fill: #fff;
 }
 body #container_card .card .infos_card .personne_card .share_card .popup_share_card {
   position: absolute;
   top: -5rem;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, 12px);
   background: #48556a;
   display: flex;
   justify-content: center;
@@ -100,19 +170,77 @@ body #container_card .card .infos_card .personne_card .share_card .popup_share_c
   box-shadow: 5px 1px 20px rgba(158, 175, 194, 0.5);
   -webkit-box-shadow: 5px 1px 20px rgba(158, 175, 194, 0.5);
   -moz-box-shadow: 5px 1px 20px rgba(158, 175, 194, 0.5);
+  transition: 0.2s ease;
+  opacity: 0;
+  visibility: hidden;
+}
+@media only screen and (max-width: 1200px) {
+  body #container_card .card .infos_card .personne_card .share_card .popup_share_card {
+    top: inherit;
+    bottom: 0;
+    width: 100%;
+    box-shadow: none;
+    height: calc(50px + 2rem);
+    transform: translateX(-50%);
+    border-radius: 0 0 10px 10px;
+    justify-content: flex-start;
+  }
+}
+body #container_card .card .infos_card .personne_card .share_card .popup_share_card::after {
+  content: "";
+  border-style: solid;
+  border-width: 12px 12px 0px 12px;
+  border-color: #48556a transparent transparent transparent;
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@media only screen and (max-width: 1200px) {
+  body #container_card .card .infos_card .personne_card .share_card .popup_share_card::after {
+    display: none;
+  }
 }
 body #container_card .card .infos_card .personne_card .share_card .popup_share_card p {
   color: #9eafc2;
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 5px;
+  margin-right: 0.6rem;
 }
-body #container_card .card .infos_card .personne_card .share_card .popup_share_card img {
-  margin: 0 0.4rem;
+body #container_card .card .infos_card .personne_card .share_card .popup_share_card a {
+  display: inline-block;
+  vertical-align: middle;
 }
-body #container_card .card .infos_card .personne_card .share_card img {
+body #container_card .card .infos_card .personne_card .share_card .popup_share_card a:hover img {
+  transform: translateY(-2px);
+}
+body #container_card .card .infos_card .personne_card .share_card .popup_share_card a img {
+  transition: 0.2s ease;
+  display: block;
+  margin: 0 0.6rem;
+}
+body #container_card .card .infos_card .personne_card .share_card .container_svg {
+  background: #ecf2f8;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  border-radius: 100%;
+}
+body #container_card .card .infos_card .personne_card .share_card .container_svg svg {
   display: block;
   margin: auto;
+}
+body #container_card .card .infos_card .personne_card .share_card .container_svg svg path {
+  transition: 0.2s ease;
+}
+body .attribution {
+  font-size: 11px;
+  text-align: center;
+  padding: 0.4rem;
+}
+body .attribution a {
+  color: #3e52a3;
 }
 
 /*# sourceMappingURL=style.css.map */
